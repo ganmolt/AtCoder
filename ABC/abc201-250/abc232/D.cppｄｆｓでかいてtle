@@ -1,0 +1,73 @@
+//INCLUDE
+//------------------------------------------
+#include <bits/stdc++.h>
+//DEFINE
+//------------------------------------------
+typedef long long int Int;
+typedef long double Double;
+#define dcml(n) fixed<<setprecision(n)
+template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
+template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
+//CONST
+//------------------------------------------
+const Int INF=1010000000000000017LL;
+const Int MOD=1000000007LL;
+const Double EPS=1e-12;
+const Double PI=3.14159265358979323846;
+//REPEAT
+//------------------------------------------
+#define   REP(i,n)   for(Int (i)=0;     (i)<(n);  (i)++)
+//-----------------------------------------
+//namespace
+using namespace std;
+//ライブラリはここに
+//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+vector<Int> dx2={1,0};
+vector<Int> dy2={0,1};
+vector<Int> dx4={-1,0,1,0};
+vector<Int> dy4={0,1,0,-1};
+vector<Int> dx5={-1,0,0,1,0};
+vector<Int> dy5={0,1,0,0,-1};
+vector<Int> dx8={-1,-1,-1,0,0,1,1,1};
+vector<Int> dy8={-1,0,1,-1,1,-1,0,1};
+vector<Int> dx9={-1,-1,-1,0,0,0,1,1,1};
+vector<Int> dy9={-1,0,1,-1,0,1,-1,0,1};
+//-----------------------------------------
+int H,W;
+bool gone[110][110];
+char C[110][110];
+int ans=0;
+void dfs(int c1, int c2, int d){
+    bool movable=false;
+    for(int i=0;i<2;i++){
+        int nc1=c1+dx2[i];
+        int nc2=c2+dy2[i];
+        //cout<<nc1<<","<<nc2<<": "<<(0<=nc1)<<(nc1<H)<<(0<=nc2)<<(nc2<W)<<(C[nc1][nc2]=='.')<<":\n";
+        if(0<=nc1 && nc1<H &&
+        0<=nc2 && nc2<W &&
+        C[nc1][nc2]=='.'){
+            if(gone[nc1][nc2])continue;
+            //cout<<nc1<<","<<nc2<<"\n";
+            movable=true;
+            gone[nc1][nc2]=true;
+            dfs(nc1,nc2,d+1);
+            gone[nc1][nc2]=false;
+        }
+    }
+    if(movable==false)chmax(ans,d);
+
+}
+void solve(){
+    gone[0][0]=true;
+    dfs(0,0,1);
+    gone[0][0]=false;
+
+    cout<<ans<<"\n";
+}
+
+int main(void){
+    cin>>H>>W;
+    REP(i,H)REP(j,W)cin>>C[i][j];
+    REP(i,H)REP(j,W)gone[i][j]=false;
+    solve();
+}

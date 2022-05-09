@@ -1,0 +1,8 @@
+#include<iostream>
+#include<string>
+using namespace std;
+int main(){
+    string S,T;cin>>S>>T;
+    cout << T << S << T;
+    return 0;
+}
