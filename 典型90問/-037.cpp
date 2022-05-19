@@ -3,9 +3,11 @@
 #include <bits/stdc++.h>
 //DEFINE
 //------------------------------------------
-#define Int long long
-#define Double long double
+typedef long long int Int;
+typedef long double Double;
 #define dcml(n) fixed<<setprecision(n)
+#define YES cout<<"Yes\n",exit(0)
+#define NO cout<<"No\n",exit(0)
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 //CONST
@@ -17,26 +19,16 @@ const Double PI=3.14159265358979323846;
 //REPEAT
 //------------------------------------------
 #define   REP(i,n)   for(Int (i)=0;     (i)<(n);  (i)++)
+#define   FOR(i,k,n)   for(Int (i)=(k);     (i)<(n);  (i)++)
 //-----------------------------------------
 //namespace
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
 //-----------------------------------------
 int main(void){
-    Int H,W;cin>>H>>W;
-    vector<vector<Int>> A(H,vector<Int>(W));
-    vector<Int> sH(W),sW(H);
-    REP(i,H)REP(j,W){
-        int a;cin>>a;
-        A[i][j]=a;
-        sH[j]+=a;
-        sW[i]+=a;
-    }
-    REP(i,H){
-        REP(j,W){
-            cout<<sH[j]+sW[i]-A[i][j]<<" ";
-        }cout<<"\n";
-    }
-}
+    int w,n;cin>>w>>n;
+    vector<int> l(n),r(n),v(n);
+    REP(i,n)cin>>l[i]>>r[i]>>v[i];
+
+    
