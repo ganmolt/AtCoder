@@ -25,7 +25,26 @@ const Double PI=3.14159265358979323846;
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+int gcd(int a,int b){
+    if(a%b==0)return b;
+    return gcd(b,a%b);
+}
 //-----------------------------------------
 int main(void){
-    int k;cin>>k;
-    if(k%9!=0)cout<<0<<"\n";
+    int n;cin>>n;
+    vector<int> a(n);REP(i,n)cin>>a[i];
+
+    vector<int> la(n),ra(n);
+    la[0]=a[0];FOR(i,1,n)la[i]=gcd(la[i-1],a[i]);
+    ra[n-1]=a[n-1];for(int i=n-2;i>=0;i--)ra[i]=gcd(ra[i+1],a[i]);
+    int ans=0;
+    REP(i,n){
+        if(1<=i){
+            if(i<=n-2)chmax(ans,gcd(la[i-1],ra[i+1]));
+            else chmax(ans,la[i-1]);
+        }else{
+            chmax(ans,ra[i+1]);
+        }
+    }
+    cout<<ans<<"\n";
+}
