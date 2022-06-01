@@ -25,21 +25,47 @@ const Double PI=3.14159265358979323846;
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+Int modpow(Int N, Int P, Int M){
+    if(P==0) return 1;
+    if(P%2==0){
+        Int t = modpow(N, P/2, M);
+        return t*t % M;
+    }
+    return N * modpow(N, P-1, M);
+}
 //-----------------------------------------
 Int mod=998244353;
 Int dp[1100][5500];
 int main(void){
     Int n,m,k;cin>>n>>m>>k;
-    for(int i=1;i<=m;i++)dp[0][i]=1;
-    for(int i=0;i<n;i++){
+    if(k==0)cout<<modpow(m,n,mod)<<"\n",exit(0);
+    for(int i=0;i<n-1;i++){
+        if(i==0){
+            for(int j=1;j<=m;j++)dp[i][j]=1;
+        }
         for(int j=1;j<=m;j++){
             dp[i][j]+=dp[i][j-1];
         }
-        for(int j=0;j<=m;j++){
-            if(j-k>=0)dp[i+1][j]+=dp[i][j-k];
-            if(j+k-1<=m)dp[i+1][j]+=(dp[i][m]-dp[i][j+k-1]);
+        
+        for(int j=1;j<=m;j++){
+            // cout<<"j:"<<j<<" k:"<<k<<" j-k:"<<j-k<<"\n";
+            if(j-k>=1){
+                dp[i+1][j]+=dp[i][j-k];
+                // cout<<"したをたす"<<dp[i+1][j]<<"\n";
+            }
+            // cout<<k<<" "<<m<<" "<<j<<" "<<m-j<<"\n";
+            if(k<=m-j){
+                // cout<<":"<<m<<":"<<dp[i][m]<<"-"<<j+k-1<<":"<<dp[i][j+k-1]<<"::";
+                dp[i+1][j]+=(dp[i][m]-dp[i][j+k-1]);
+                // cout<<"うえをたす"<<dp[i+1][j]<<"\n";
+            }
             dp[i+1][j]%=mod;
         }
     }
-    cout<<dp[n][m]<<"\n";
+    for(int i=1;i<=m;i++){
+        dp[n-1][i]+=dp[n-1][i-1];
+        dp[n-1][i]+=mod;
+        dp[n-1][i]%=mod;
+    }
+    cout<<(dp[n-1][m]%mod+mod)%mod<<"\n";
 }
