@@ -26,27 +26,31 @@ using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 //-----------------------------------------
-vector<bool> dp[110][110000];
 int main(void){
-    int n,s;cin>>n>>s;
-    vector<int> a(n),b(n);REP(i,n)cin>>a[i]>>b[i];
+    int n,k;cin>>n>>k;
+    vector<int> a(n);REP(i,n)cin>>a[i];
 
-    dp[1][a[0]]={0};
-    dp[1][b[0]]={1};
-    FOR(i,1,n){
-        REP(j,s){
-            if(!dp[i][j].empty()){
-                if(j+a[i]<=s)dp[i+1][j+a[i]]=dp[i][j],dp[i+1][j+a[i]].push_back(0);
-                if(j+b[i]<=s)dp[i+1][j+b[i]]=dp[i][j],dp[i+1][j+b[i]].push_back(1);
-            }
+    if(k==1)YES;
+    
+    vector<int> b[k];
+    REP(i,n){
+        b[i%k].push_back(a[i]);
+    }
+    REP(i,k){
+        sort(b[i].begin(),b[i].end());
+    }
+    int cnt=0;
+    int c[n];
+    REP(i,n){
+        REP(j,k){
+            if(cnt==n)break;
+            c[cnt]=b[j][i];
+            cnt++;
         }
     }
-    if(dp[n][s].empty()){
-        cout<<"Impossible\n";
-    }else{
-        for(auto r:dp[n][s]){
-            cout<<char(r+'A');
-        }
-        cout<<"\n"; 
+    REP(i,n-1){
+        if(c[i]<=c[i+1])continue;
+        NO;
     }
+    YES;
 }

@@ -26,27 +26,7 @@ using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 //-----------------------------------------
-vector<bool> dp[110][110000];
 int main(void){
-    int n,s;cin>>n>>s;
-    vector<int> a(n),b(n);REP(i,n)cin>>a[i]>>b[i];
-
-    dp[1][a[0]]={0};
-    dp[1][b[0]]={1};
-    FOR(i,1,n){
-        REP(j,s){
-            if(!dp[i][j].empty()){
-                if(j+a[i]<=s)dp[i+1][j+a[i]]=dp[i][j],dp[i+1][j+a[i]].push_back(0);
-                if(j+b[i]<=s)dp[i+1][j+b[i]]=dp[i][j],dp[i+1][j+b[i]].push_back(1);
-            }
-        }
-    }
-    if(dp[n][s].empty()){
-        cout<<"Impossible\n";
-    }else{
-        for(auto r:dp[n][s]){
-            cout<<char(r+'A');
-        }
-        cout<<"\n"; 
-    }
+    string n;cin>>n;
+    cout<<n[1]<<n[2]<<"\n";
 }
