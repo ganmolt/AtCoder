@@ -6,8 +6,8 @@
 typedef long long int Int;
 typedef long double Double;
 #define dcml(n) fixed<<setprecision(n)
-#define YES cout<<"Possible\n",exit(0)
-#define NO cout<<"Impossible\n",exit(0)
+#define YES cout<<"Yes\n",exit(0)
+#define NO cout<<"No\n",exit(0)
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 //CONST
@@ -27,7 +27,44 @@ using namespace std;
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 //-----------------------------------------
 int main(void){
-    int a,b;cin>>a>>b;
-    if(a%3==0 || b%3==0 || (a+b)%3==0)YES;
-    NO;
+    int w,h,n;cin>>w>>h>>n;
+    vector<int> x(n),y(n),a(n);REP(i,n)cin>>x[i]>>y[i]>>a[i];
+    bool b[w][h];REP(i,w)REP(j,h)b[i][j]=1;
+    REP(i,n){
+        if(a[i]==1){
+            for(int p=x[i]-1;p>=0;p--){
+                REP(q,h){
+                    b[p][q]=0;
+                }
+            }
+        }
+        if(a[i]==2){
+            for(int p=x[i];p<w;p++){
+                REP(q,h){
+                    b[p][q]=0;
+                }
+            }
+        }
+        if(a[i]==3){
+            for(int q=y[i]-1;q>=0;q--){
+                REP(p,w){
+                    b[p][q]=0;
+                }
+            }
+        }
+        if(a[i]==4){
+            for(int q=y[i];q<h;q++){
+                REP(p,w){
+                    b[p][q]=0;
+                }
+            }
+        }
+    }
+    int cnt=0;
+    REP(j,h){
+        REP(i,w){
+            cnt+=b[i][j];
+        }
+    }
+    cout<<cnt<<"\n";
 }

@@ -6,8 +6,6 @@
 typedef long long int Int;
 typedef long double Double;
 #define dcml(n) fixed<<setprecision(n)
-#define YES cout<<"Possible\n",exit(0)
-#define NO cout<<"Impossible\n",exit(0)
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 //CONST
@@ -25,9 +23,51 @@ const Double PI=3.14159265358979323846;
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+Int pow(Int x, Int n, Int mod=MOD){
+    Int ret=1;
+    while(n>0){
+        if(n&1)ret=ret*x%mod;
+        x=x*x%mod;
+        n>>=1;
+    }
+    return ret;
+}
 //-----------------------------------------
 int main(void){
-    int a,b;cin>>a>>b;
-    if(a%3==0 || b%3==0 || (a+b)%3==0)YES;
-    NO;
+    Int n;cin>>n;
+    vector<Int> a(n);REP(i,n)cin>>a[i];
+    map<Int,Int> m;
+    REP(i,n){
+        m[a[i]]++;
+    }
+    /*
+    FOR(i,1,n/2+1){
+        cout<<i*2-(n%2==0)<<":"<<m[i*2-(n%2==0)]<<" ";
+    }*/
+    FOR(i,1,n/2+1){
+        //cout<<a[i*2-(i%2==0)]<<":"<<m[a[i*2-(i%2==0)]]<<" ";
+        if(m[a[i*2-(n%2==0)]]==2)continue;
+        cout<<"0\n";
+        exit(0);
+    }
+    if(n%2==1 && m[0]!=1){
+        cout<<"0\n";
+        exit(0);
+    }
+
+    /*
+    if(n%2==1){
+        REP(i,n){
+            if(i%2==1)a[i]--;
+            if(i==a[i])continue;
+            NO;
+        }
+    }else{
+        REP(i,n){
+            if(i%2==0)a[i]--;
+            if(i==a[i])continue;
+            NO;
+        }
+    }*/
+    cout<<pow(2,n/2)<<"\n";
 }

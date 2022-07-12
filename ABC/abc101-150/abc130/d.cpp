@@ -6,8 +6,8 @@
 typedef long long int Int;
 typedef long double Double;
 #define dcml(n) fixed<<setprecision(n)
-#define YES cout<<"Possible\n",exit(0)
-#define NO cout<<"Impossible\n",exit(0)
+#define YES cout<<"Yes\n",exit(0)
+#define NO cout<<"No\n",exit(0)
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 //CONST
@@ -27,7 +27,21 @@ using namespace std;
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 //-----------------------------------------
 int main(void){
-    int a,b;cin>>a>>b;
-    if(a%3==0 || b%3==0 || (a+b)%3==0)YES;
-    NO;
+    int n;Int k;cin>>n>>k;
+    vector<Int> a(n);REP(i,n)cin>>a[i];
+
+    int l=0,r=1;
+    Int sm=a[l];
+    Int cnt=0;
+    while(r<=n){
+        if(sm>=k){
+            cnt+=n-r+1;
+            sm-=a[l];
+            l++;
+        }else{
+            sm+=a[r];
+            r++;
+        }
+    }
+    cout<<cnt<<"\n";
 }
