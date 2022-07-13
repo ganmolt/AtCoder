@@ -25,10 +25,8 @@ const Double PI=3.14159265358979323846;
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
 //-----------------------------------------
 int main(void){
-    int n;cin>>n;
-    cout<<n<<"\n";
-    REP(i,n)cout<<i+1<<" ";cout<<"\n";
+    int a,b,c,d;cin>>a>>b>>c>>d;
+    cout<<max(a*b,c*d)<<"\n";
 }
