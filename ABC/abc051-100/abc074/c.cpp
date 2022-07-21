@@ -25,51 +25,31 @@ const Double PI=3.14159265358979323846;
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
 //-----------------------------------------
-vector<pair<Int,Int>> prime_factor(Int n){
-    vector<pair<Int,Int>> ret;
-    for(Int i=2;i*i<=n;i++){
-        if(n%i!=0)continue;
-        Int tmp=0;
-        while(n%i==0){
-            tmp++;
-            n/=i;
-        }
-        ret.push_back(make_pair(i,tmp));
+int A,B,C,D,E,F;
+bool seen[6600][6600];
+double d = -1; int ansa, ansb;
+void dfs(int a, int b){
+    if(seen[a][b])return;
+    seen[a][b]=true;
+
+    if(a*E < b*100)return;
+    if(F < a+b)return;
+
+    if(d < 100.0*b/(a+b)){
+        d = 100.0*b/(a+b);
+        ansa = a;
+        ansb = b;
     }
-    if(n!=1)ret.push_back(make_pair(n,1));
-    return ret;
+
+    dfs(a+100*A, b);
+    dfs(a+100*B, b);
+    dfs(a, b+C);
+    dfs(a, b+D);
 }
 int main(void){
-    Int n,m;cin>>n>>m;
-    vector<Int> a(n);REP(i,n)cin>>a[i];
-
-    bool isPrime[110000];REP(i,110000)isPrime[i]=true;isPrime[0]==false;
-
-
-    bool isDiv[110000];REP(i,110000)isDiv[i]=false;
-    REP(i,n){
-        vector<pair<Int,Int>> vp=prime_factor(a[i]);
-        for(auto r:vp){
-            isDiv[r.first]=true;
-        }
-    }
-    for(int i=1;i<=m;i++){
-        if(isDiv[i]){
-            for(int j=1;i*j<=m;j++){
-                isPrime[i*j]=false;
-            }
-        }
-    }
-
-    vector<Int> ans;
-    for(int i=1;i<=m;i++){
-        if(isPrime[i])ans.push_back(i);
-    }
-    cout<<ans.size()<<"\n";
-    int k=0;
-    for(auto r:ans){
-        cout<<r<<"\n";
-    }
+    cin>>A>>B>>C>>D>>E>>F;
+    dfs(100*A, 0);
+    dfs(100*B, 0);
+    cout<<max(ansa+ansb, 100*A)<<" "<<ansb<<"\n";
 }

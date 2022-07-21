@@ -25,51 +25,50 @@ const Double PI=3.14159265358979323846;
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
 //-----------------------------------------
-vector<pair<Int,Int>> prime_factor(Int n){
-    vector<pair<Int,Int>> ret;
-    for(Int i=2;i*i<=n;i++){
-        if(n%i!=0)continue;
-        Int tmp=0;
-        while(n%i==0){
-            tmp++;
-            n/=i;
-        }
-        ret.push_back(make_pair(i,tmp));
-    }
-    if(n!=1)ret.push_back(make_pair(n,1));
-    return ret;
-}
 int main(void){
-    Int n,m;cin>>n>>m;
+    Int n,k;cin>>n>>k;
     vector<Int> a(n);REP(i,n)cin>>a[i];
+    vector<Int> b(n);REP(i,n)cin>>b[i];
 
-    bool isPrime[110000];REP(i,110000)isPrime[i]=true;isPrime[0]==false;
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
 
+    Int lb = 0;
+    Int ub = 4e18;
 
-    bool isDiv[110000];REP(i,110000)isDiv[i]=false;
-    REP(i,n){
-        vector<pair<Int,Int>> vp=prime_factor(a[i]);
-        for(auto r:vp){
-            isDiv[r.first]=true;
-        }
-    }
-    for(int i=1;i<=m;i++){
-        if(isDiv[i]){
-            for(int j=1;i*j<=m;j++){
-                isPrime[i*j]=false;
+    vector<pair<Int,Int>> v;
+
+    while(lb < ub-1){
+        Int m = (ub+lb)/2;
+        Int ans=0;
+        Int max_val = 0;
+
+        REP(i,n){
+            auto srch = upper_bound(b.begin(),b.end(),m/a[i]);
+
+            if(srch == b.begin()){
+                continue;
             }
+
+            Int cnt = srch - b.begin();
+            ans += cnt;
+            srch--;
+            chmax(max_val, (*srch) * a[i]);
+        }
+        v.push_back({m, max_val});
+        if(ans == k){
+            cout<<max_val<<"\n";
+            return 0;
+        }
+        else if(k < ans){
+            ub = m;
+        }
+        else{
+            lb = m;
         }
     }
 
-    vector<Int> ans;
-    for(int i=1;i<=m;i++){
-        if(isPrime[i])ans.push_back(i);
-    }
-    cout<<ans.size()<<"\n";
-    int k=0;
-    for(auto r:ans){
-        cout<<r<<"\n";
-    }
+    sort(v.begin(),v.end());
+    cout<< upper_bound(v.begin(),v.end(), make_pair(lb,INF) )->second <<"\n";
 }

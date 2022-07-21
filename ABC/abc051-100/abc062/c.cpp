@@ -25,51 +25,49 @@ const Double PI=3.14159265358979323846;
 using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
 //-----------------------------------------
-vector<pair<Int,Int>> prime_factor(Int n){
-    vector<pair<Int,Int>> ret;
-    for(Int i=2;i*i<=n;i++){
-        if(n%i!=0)continue;
-        Int tmp=0;
-        while(n%i==0){
-            tmp++;
-            n/=i;
-        }
-        ret.push_back(make_pair(i,tmp));
-    }
-    if(n!=1)ret.push_back(make_pair(n,1));
-    return ret;
-}
 int main(void){
-    Int n,m;cin>>n>>m;
-    vector<Int> a(n);REP(i,n)cin>>a[i];
+    Int h,w;cin>>h>>w;
+    
+    Int s1,s2,s3;
+    Int ans=INF;
+    for(int i=1;i<=h/2;i++){
+        s1 = i*w;
+        int h_=h-i;
+        
+        s2 = h_/2 * w;
+        s3 = (h_-(h_/2)) * w;
 
-    bool isPrime[110000];REP(i,110000)isPrime[i]=true;isPrime[0]==false;
+        if(s1<0 || s2<0 || s3<0)continue;
 
+        chmin(ans, max({s1,s2,s3})-min({s1,s2,s3}) );
 
-    bool isDiv[110000];REP(i,110000)isDiv[i]=false;
-    REP(i,n){
-        vector<pair<Int,Int>> vp=prime_factor(a[i]);
-        for(auto r:vp){
-            isDiv[r.first]=true;
-        }
-    }
-    for(int i=1;i<=m;i++){
-        if(isDiv[i]){
-            for(int j=1;i*j<=m;j++){
-                isPrime[i*j]=false;
-            }
-        }
+        s2 = w/2 * h_;
+        s3 = (w-(w/2)) * h_;
+
+        if(s1<0 || s2<0 || s3<0)continue;
+
+        chmin(ans, max({s1,s2,s3})-min({s1,s2,s3}) );
     }
 
-    vector<Int> ans;
-    for(int i=1;i<=m;i++){
-        if(isPrime[i])ans.push_back(i);
+    for(int i=1;i<=w/2;i++){
+        s1 = i*h;
+        int w_=w-i;
+        
+        s2 = w_/2 * h;
+        s3 = (w_-(w_/2)) * h;
+
+        if(s1<0 || s2<0 || s3<0)continue;
+
+        chmin(ans, max({s1,s2,s3})-min({s1,s2,s3}) );
+
+        s2 = h/2 * w_;
+        s3 = (h-(h/2)) * w_;
+
+        if(s1<0 || s2<0 || s3<0)continue;
+
+        chmin(ans, max({s1,s2,s3})-min({s1,s2,s3}) );
     }
-    cout<<ans.size()<<"\n";
-    int k=0;
-    for(auto r:ans){
-        cout<<r<<"\n";
-    }
+
+    cout<<ans<<"\n";
 }
