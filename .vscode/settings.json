@@ -74,7 +74,9 @@
         "queue": "cpp",
         "stack": "cpp",
         "xtree": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "compare": "cpp",
+        "xstddef": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
