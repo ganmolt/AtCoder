@@ -76,7 +76,17 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "compare": "cpp",
-        "xstddef": "cpp"
+        "xstddef": "cpp",
+        "bit": "cpp",
+        "concepts": "cpp",
+        "ios": "cpp",
+        "xfacet": "cpp",
+        "xiosbase": "cpp",
+        "xlocale": "cpp",
+        "xlocinfo": "cpp",
+        "xlocnum": "cpp",
+        "xmemory": "cpp",
+        "xtr1common": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
