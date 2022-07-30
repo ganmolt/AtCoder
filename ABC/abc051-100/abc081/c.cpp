@@ -26,26 +26,21 @@ using namespace std;
 //ライブラリはここに
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 //-----------------------------------------
-bool b[110][11000];
 int main(void){
-    int n;cin>>n;
+    int n,k;cin>>n>>k;
     vector<int> a(n);REP(i,n)cin>>a[i];
 
+    map<int,int> m;
+    REP(i,n)m[a[i]]++;
 
-    priority_queue<pair<int,int>> que;
-    que.push({0,0});
+    int cnt=m.size();
+    vector<int> v;for(auto r:m)v.push_back(r.second);
+    sort(v.begin(),v.end());
 
     int ans=0;
-    while(true){
-        auto r=que.top();que.pop();
-        if(-r.first>n)break;
-
-        if(b[-r.first][r.second])continue;
-        //cout<<r.first<<","<<r.second<<"\n";
-        b[-r.first][r.second]=true;
-        que.push({r.first-1, r.second});
-        que.push({r.first-1, r.second+a[-r.first]});
-        if(r.second%10)chmax(ans,r.second);
+    REP(i,cnt){
+        if(cnt-i<=k)break;
+        ans+=v[i];
     }
     cout<<ans<<"\n";
 }
