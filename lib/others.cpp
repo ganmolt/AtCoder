@@ -1,0 +1,1 @@
+Int gcd(Int x, Int y) { return (x % y)? gcd(y, x % y): y; }
